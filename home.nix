@@ -26,6 +26,7 @@ in
     # shamilton.modules.home-manager.day-night-plasma-wallpapers 
     # ./../../GIT/nur-packages-template/modules/day-night-plasma-wallpapers-home-manager.nix
     ./modules/myvim
+    ./modules/redshift-auto
   ];
   
   nixpkgs.config.allowUnfree = true;
@@ -79,6 +80,9 @@ in
 
 #  services.day-night-plasma-wallpapers.enable = true;
 #  services.day-night-plasma-wallpapers.onCalendar = "*-*-* 16:00:00";
+  services.redshift-auto.enable = true;
+  services.redshift-auto.onCalendar = "*-*-* 16:00:00";
+
   myvim.enable = true;
 
   programs.git = {
