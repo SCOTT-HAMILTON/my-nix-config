@@ -55,6 +55,8 @@ in rec
     kdeApplications.spectacle
     mpv
     simplescreenrecorder
+    mate.eom
+    zathura
 
     ## Development
     cmake 
@@ -96,6 +98,10 @@ in rec
     enable = true;
     userName  = "SCOTT-HAMILTON";
     userEmail = "sgn.hamilton@protonmail.com";
+  };
+
+  programs.texlive = {
+    enable = true;
   };
 
   programs.zsh = {

@@ -19,7 +19,12 @@ in {
     {
       programs.vim.enable = true;
       programs.vim.extraConfig = builtins.readFile "${MyVimConfig}/vimrc";
-      programs.vim.plugins = [ "vim-colorschemes" "commentary" "vim-qml" MyVimFtplugins ];
+      programs.vim.plugins = [ 
+        MyVimFtplugins
+        "commentary"
+        "vim-colorschemes"
+        "vim-qml"
+      ];
     }
   ]));
 }
