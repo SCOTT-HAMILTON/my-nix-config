@@ -1,10 +1,8 @@
 
-{ pkgs ? import <nixpkgs>{}
-, lib ? pkgs.lib 
+{ pkgs ? import <nixpkgs>{} , lib ? pkgs.lib 
 , config
 , options
 , modulesPath
-
 }:
 
 with builtins;
@@ -20,10 +18,12 @@ let
   nur-no-pkgs = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz")
   {};
 
-  # shamilton = import (builtins.fetchTarball {
-  #   url = "https://github.com/SCOTT-HAMILTON/nur-packages-template/archive/master.tar.gz";
-  #   sha256 = "0a7lcizi9sw6jfpdqzjy1fgl50jipjcyglw1s0fad82p43yjwjwg" ;
-  # }) {pkgs = pkgs;};
+  localShamilton = import ./../../GIT/nur-packages-template/default.nix {};
+
+  shamilton = import (builtins.fetchTarball {
+    url = "https://github.com/SCOTT-HAMILTON/nur-packages-template/archive/master.tar.gz";
+    sha256 = "1iiqcczrd79pihwpib3c3vmq0n7cg9if91rqxkq442lwpzvs41pp";
+  }) {pkgs = pkgs;};
 in rec
 {
   imports = [
@@ -32,6 +32,9 @@ in rec
     # ./../../GIT/nur-packages-template/modules/day-night-plasma-wallpapers-home-manager.nix
     ./modules/myvim
     ./modules/redshift-auto
+  ];
+
+  nixpkgs.overlays = [
   ];
 
   home.homeDirectory = "/home/scott";
@@ -45,14 +48,36 @@ in rec
     mimeApps.enable = true;
   };
 
+  myvim.enable = true;
+
+  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.packageOverrides = pkgs: {
+    nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
+      inherit pkgs;
+    };
+  };
+
   home.packages = [
     ## Personnal apps
-#    nur.repos.shamilton.day-night-plasma-wallpapers 
+    # nur.repos.shamilton.controls-for-fake
+    nur.repos.shamilton.inkscape
+    nur.repos.shamilton.keysmith
+    nur.repos.shamilton.ksmoothdock
+    nur.repos.shamilton.lokalize
+    # nur.repos.shamilton.scripts
+    localShamilton.scripts
+    localShamilton.controls-for-fake
+    localShamilton.kapptemplate
+    localShamilton.kirigami-gallery
+    nur.repos.shamilton.spectacle-clipboard
+
+    ## Audio
+    audaciousQt5
 
     ## Desktop Environment
     baobab
     gnome3.dconf
-    kdeApplications.spectacle
+    libreoffice    
     mpv
     simplescreenrecorder
     mate.eom
@@ -60,14 +85,18 @@ in rec
 
     ## Development
     cmake 
+    cntr
     gnumake
     dfeet 
     gcc
+    qt5.qttools
 
     ## Games
     minecraft
+    dosbox
 
     ## Graphics
+    blender
     gimp
 
     ## Internet
@@ -77,22 +106,27 @@ in rec
     ## Packages managers
     flatpak
 
+    ## Security
+    # nur.repos.rycee.firefox-addons.buster-captcha-solver
+    # nur.repos.rycee.firefox-addons.ghostery
+    # nur.repos.rycee.firefox-addons.google-search-link-fix
+    # nur.repos.rycee.firefox-addons.multi-account-containers
+    # nur.repos.rycee.firefox-addons.privacy-badger
+    # nur.repos.rycee.firefox-addons.privacy-possum
+    # nur.repos.rycee.firefox-addons.temporary-containers
+
     ## Utilities
+    adb-sync
     doas
     nix-index
     patchelf
+    python3Packages.youtube-dl
     xdotool
   ];
 
-
-  myvim.enable = true;
-
-  nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.packageOverrides = pkgs: {
-    nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
-      inherit pkgs;
-    };
-  };
+ programs.emacs = {
+   enable = true;
+ };
 
   programs.git = {
     enable = true;
@@ -115,6 +149,9 @@ in rec
       ignoreDups = true;
       path = "${xdg.dataHome}/zsh/zsh_history";
     };
+    initExtra = ''
+      alias ytdl="cd ~/Musique;youtube-dl -x --audio-format opus -o \"%(title)s.mkv\""
+    '';
     oh-my-zsh = {
       enable = true;
       theme = "robbyrussell";
@@ -133,4 +170,8 @@ in rec
 
   services.redshift-auto.enable = true;
   services.redshift-auto.onCalendar = "*-*-* 16:00:00";
+
+  home.sessionVariables = {
+    EDITOR = "vim";
+  };
 }

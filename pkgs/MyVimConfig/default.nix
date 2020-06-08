@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
     owner = "SCOTT-HAMILTON";
     repo = "vimconfig";
     rev = "master";
-    sha256 = "0f9fpgc16hscx73qf1yisf75bg07faqgkqp7g28jr8q5qbyzzmv4";
+    sha256 = "1c0mr3sd1jz1dncxnzdsbm1lmv48hxqbbll2lx20i4lic8xl8rlx";
   };
 
   propagatedBuildInputs = [ coreutils ];
@@ -21,6 +21,7 @@ stdenv.mkDerivation rec {
 
   postPatch = ''
     find . -maxdepth 1 | egrep -v "^\./ftplugin$|^\./vimrc$|^\.$" | xargs -n1 -L1 -r -I{} rm -rf {}
+    echo "let g:lsp_settings_servers_dir='\$XDG_CACHE_HOME/vim/lsp-servers'" >> ./vimrc
   '';
 
   installPhase = ''
