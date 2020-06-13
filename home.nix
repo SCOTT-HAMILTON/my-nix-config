@@ -59,23 +59,27 @@ in rec
 
   home.packages = [
     ## Personnal apps
-    # nur.repos.shamilton.controls-for-fake
+    nur.repos.shamilton.controls-for-fake
     nur.repos.shamilton.inkscape
+    nur.repos.shamilton.kapptemplate
+    nur.repos.shamilton.kbreakout
     nur.repos.shamilton.keysmith
+    nur.repos.shamilton.kirigami-gallery
     nur.repos.shamilton.ksmoothdock
     nur.repos.shamilton.lokalize
-    # nur.repos.shamilton.scripts
-    localShamilton.scripts
-    localShamilton.controls-for-fake
-    localShamilton.kapptemplate
-    localShamilton.kirigami-gallery
     nur.repos.shamilton.spectacle-clipboard
+
+    localShamilton.baobab
+    localShamilton.bomber
+    localShamilton.juk
+    localShamilton.killbots
+    localShamilton.merge-keepass
+    localShamilton.scripts
 
     ## Audio
     audaciousQt5
 
     ## Desktop Environment
-    baobab
     gnome3.dconf
     libreoffice    
     mpv
@@ -94,6 +98,7 @@ in rec
     ## Games
     minecraft
     dosbox
+    kdeApplications.kgeography
 
     ## Graphics
     blender
@@ -118,6 +123,7 @@ in rec
     ## Utilities
     adb-sync
     doas
+    filelight
     nix-index
     patchelf
     python3Packages.youtube-dl
