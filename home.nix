@@ -1,4 +1,3 @@
-
 { pkgs ? import <nixpkgs>{} , lib ? pkgs.lib 
 , config
 , options
@@ -27,11 +26,13 @@ let
 in rec
 {
   imports = [
-#    nur-no-pkgs.repos.shamilton.modules.home-manager.day-night-plasma-wallpapers 
+    # nur-no-pkgs.repos.shamilton.modules.home-manager.day-night-plasma-wallpapers
     # shamilton.modules.home-manager.day-night-plasma-wallpapers 
     # ./../../GIT/nur-packages-template/modules/day-night-plasma-wallpapers-home-manager.nix
-    ./modules/myvim
-    ./modules/redshift-auto
+    localShamilton.modules.hmModules.myvim
+    localShamilton.modules.hmModules.redshift-auto
+    localShamilton.modules.hmModules.sync-database
+    ./../passwords
   ];
 
   nixpkgs.overlays = [
@@ -59,22 +60,21 @@ in rec
 
   home.packages = [
     ## Personnal apps
-    nur.repos.shamilton.controls-for-fake
-    nur.repos.shamilton.inkscape
-    nur.repos.shamilton.kapptemplate
-    nur.repos.shamilton.kbreakout
-    nur.repos.shamilton.keysmith
-    nur.repos.shamilton.kirigami-gallery
-    nur.repos.shamilton.ksmoothdock
-    nur.repos.shamilton.lokalize
-    nur.repos.shamilton.spectacle-clipboard
-
     localShamilton.baobab
     localShamilton.bomber
+    localShamilton.controls-for-fake
+    localShamilton.inkscape
     localShamilton.juk
+    localShamilton.kapptemplate
+    localShamilton.kbreakout
+    localShamilton.keysmith
     localShamilton.killbots
+    localShamilton.kirigami-gallery
+    localShamilton.ksmoothdock
+    localShamilton.lokalize
     localShamilton.merge-keepass
     localShamilton.scripts
+    localShamilton.spectacle-clipboard
 
     ## Audio
     audaciousQt5
