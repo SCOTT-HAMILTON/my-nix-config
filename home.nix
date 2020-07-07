@@ -23,6 +23,9 @@ let
     url = "https://github.com/SCOTT-HAMILTON/nur-packages-template/archive/master.tar.gz";
     sha256 = "1iiqcczrd79pihwpib3c3vmq0n7cg9if91rqxkq442lwpzvs41pp";
   }) {pkgs = pkgs;};
+
+  lupdate = callPackage ./pkgs/lupdate { };
+  lrelease = callPackage ./pkgs/lrelease { };
 in rec
 {
   imports = [
@@ -35,8 +38,7 @@ in rec
     ./../passwords
   ];
 
-  nixpkgs.overlays = [
-  ];
+  nixpkgs.overlays = [ ];
 
   home.homeDirectory = "/home/scott";
 
@@ -60,21 +62,24 @@ in rec
 
   home.packages = [
     ## Personnal apps
-    localShamilton.baobab
-    localShamilton.bomber
-    localShamilton.controls-for-fake
-    localShamilton.inkscape
-    localShamilton.juk
-    localShamilton.kapptemplate
-    localShamilton.kbreakout
+    nur.repos.shamilton.baobab
+    nur.repos.shamilton.bomber
+    nur.repos.shamilton.inkscape
+    nur.repos.shamilton.juk
+    nur.repos.shamilton.kapptemplate
+    nur.repos.shamilton.kbreakout
     localShamilton.keysmith
-    localShamilton.killbots
-    localShamilton.kirigami-gallery
-    localShamilton.ksmoothdock
-    localShamilton.lokalize
-    localShamilton.merge-keepass
-    localShamilton.scripts
-    localShamilton.spectacle-clipboard
+    nur.repos.shamilton.killbots
+    nur.repos.shamilton.kirigami-gallery
+    nur.repos.shamilton.ksmoothdock
+    nur.repos.shamilton.lokalize
+    nur.repos.shamilton.merge-keepass
+    nur.repos.shamilton.spectacle-clipboard
+    nur.repos.shamilton.scripts
+    nur.repos.shamilton.controls-for-fake
+    nur.repos.shamilton.fake-mic-wav-player
+    localShamilton.wiiuse
+    localShamilton.super-tux-kart
 
     ## Audio
     audaciousQt5
@@ -88,12 +93,20 @@ in rec
     zathura
 
     ## Development
+    lupdate
+    lrelease
+    clang_10
     cmake 
     cntr
-    gnumake
     dfeet 
-    gcc
+    fira-code
+    # gcc
+    gdb
+    gnumake
+    # qt5.full
+    qt5.qtdoc
     qt5.qttools
+    qtcreator
 
     ## Games
     minecraft
@@ -127,8 +140,18 @@ in rec
     nix-index
     patchelf
     python3Packages.youtube-dl
+    texlive.combined.scheme-full
+    tree
     xdotool
-  ];
+  ] ++
+  # InstantWM
+  [
+    localShamilton.instantwm
+    localShamilton.instantmenu
+    localShamilton.instantutils
+    localShamilton.instantwallpaper
+  ]
+  ;
 
  programs.emacs = {
    enable = true;
@@ -140,9 +163,9 @@ in rec
     userEmail = "sgn.hamilton@protonmail.com";
   };
 
-  programs.texlive = {
-    enable = true;
-  };
+  # programs.texlive = {
+  #   enable = true;
+  # };
 
   programs.zsh = {
     enable = true;
