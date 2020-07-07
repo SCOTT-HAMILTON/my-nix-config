@@ -36,11 +36,12 @@ in rec
     localShamilton.modules.hmModules.redshift-auto
     localShamilton.modules.hmModules.sync-database
     ./../passwords
+    ./../user
   ];
 
   nixpkgs.overlays = [ ];
 
-  home.homeDirectory = "/home/scott";
+  home.homeDirectory = config.home-dir.home_dir;
 
   xdg = {
     enable = true;
@@ -180,6 +181,9 @@ in rec
     };
     initExtra = ''
       alias ytdl="cd ~/Musique;youtube-dl -x --audio-format opus -o \"%(title)s.mkv\""
+      export XDG_CACHE_HOME="${home.homeDirectory}/.local/cache"
+      export XDG_CONFIG_HOME="${home.homeDirectory}/.config"
+      export XDG_DATA_HOME="${home.homeDirectory}/.local/share"
     '';
     oh-my-zsh = {
       enable = true;
