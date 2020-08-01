@@ -33,8 +33,8 @@ in rec
     # shamilton.modules.home-manager.day-night-plasma-wallpapers 
     # ./../../GIT/nur-packages-template/modules/day-night-plasma-wallpapers-home-manager.nix
     localShamilton.modules.hmModules.myvim
-    localShamilton.modules.hmModules.redshift-auto
-    localShamilton.modules.hmModules.sync-database
+    nur-no-pkgs.repos.shamilton.modules.hmModules.redshift-auto
+    nur-no-pkgs.repos.shamilton.modules.hmModules.sync-database
     ./../passwords
     ./../user
   ];
@@ -65,22 +65,23 @@ in rec
     ## Personnal apps
     nur.repos.shamilton.baobab
     nur.repos.shamilton.bomber
+    localShamilton.controls-for-fake
+    nur.repos.shamilton.fake-mic-wav-player
+    localShamilton.gufw
     nur.repos.shamilton.inkscape
     nur.repos.shamilton.juk
     nur.repos.shamilton.kapptemplate
     nur.repos.shamilton.kbreakout
-    localShamilton.keysmith
+    nur.repos.shamilton.keysmith
     nur.repos.shamilton.killbots
     nur.repos.shamilton.kirigami-gallery
     nur.repos.shamilton.ksmoothdock
     nur.repos.shamilton.lokalize
     nur.repos.shamilton.merge-keepass
-    nur.repos.shamilton.spectacle-clipboard
     nur.repos.shamilton.scripts
-    nur.repos.shamilton.controls-for-fake
-    nur.repos.shamilton.fake-mic-wav-player
-    localShamilton.wiiuse
-    localShamilton.super-tux-kart
+    nur.repos.shamilton.spectacle-clipboard
+    nur.repos.shamilton.super-tux-kart
+    nur.repos.shamilton.wiiuse
 
     ## Audio
     audaciousQt5
@@ -94,17 +95,23 @@ in rec
     zathura
 
     ## Development
-    lupdate
-    lrelease
+    # gcc
+    # gnome3.glade
+    # qt5.full
     clang_10
     cmake 
     cntr
     dfeet 
+    docker
+    docker-compose
     fira-code
-    # gcc
     gdb
+    gettext
     gnumake
-    # qt5.full
+    lrelease
+    lupdate
+    meson
+    poedit
     qt5.qtdoc
     qt5.qttools
     qtcreator
@@ -125,34 +132,18 @@ in rec
     ## Packages managers
     flatpak
 
-    ## Security
-    # nur.repos.rycee.firefox-addons.buster-captcha-solver
-    # nur.repos.rycee.firefox-addons.ghostery
-    # nur.repos.rycee.firefox-addons.google-search-link-fix
-    # nur.repos.rycee.firefox-addons.multi-account-containers
-    # nur.repos.rycee.firefox-addons.privacy-badger
-    # nur.repos.rycee.firefox-addons.privacy-possum
-    # nur.repos.rycee.firefox-addons.temporary-containers
-
     ## Utilities
     adb-sync
     doas
     filelight
+    gnome3.adwaita-icon-theme
     nix-index
     patchelf
     python3Packages.youtube-dl
     texlive.combined.scheme-full
     tree
     xdotool
-  ] ++
-  # InstantWM
-  [
-    localShamilton.instantwm
-    localShamilton.instantmenu
-    localShamilton.instantutils
-    localShamilton.instantwallpaper
-  ]
-  ;
+  ];
 
  programs.emacs = {
    enable = true;
@@ -161,7 +152,7 @@ in rec
   programs.git = {
     enable = true;
     userName  = "SCOTT-HAMILTON";
-    userEmail = "sgn.hamilton@protonmail.com";
+    userEmail = "sgn.hamilton+github@protonmail.com";
   };
 
   # programs.texlive = {
