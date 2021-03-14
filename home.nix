@@ -35,7 +35,11 @@ rec
   services.redshift-auto.enable = true;
   services.redshift-auto.onCalendar = "*-*-* 16:00:00";
   home.homeDirectory = config.home-dir.home_dir;
-  nixpkgs.overlays = [ ];
+  nixpkgs.overlays = [
+    localShamilton.overlays.rofi
+    localShamilton.overlays.alacritty
+    localShamilton.overlays.tabbed
+  ];
   xdg = {
     enable = true;
     cacheHome = "${home.homeDirectory}/.local/cache";
@@ -55,6 +59,7 @@ rec
     localShamilton.android-platform-tools
     localShamilton.baobab
     localShamilton.bomber
+    localShamilton.cdc-cognitoform-result-generator
     localShamilton.controls-for-fake
     localShamilton.fake-mic-wav-player
     localShamilton.haste-client
@@ -120,15 +125,18 @@ rec
 
     ## Utilities
     adb-sync
+    alacritty
     doas
-    # geogebra
     gnome3.adwaita-icon-theme
     gource
     nix-index
     nixpkgs-review
     patchelf
     python3Packages.youtube-dl
+    ripgrep
+    rofi
     texlive.combined.scheme-full
+    tabbed
     tldr
     tree
     xdotool
@@ -154,11 +162,14 @@ rec
       path = "${xdg.dataHome}/zsh/zsh_history";
     };
     initExtra = ''
-      alias ytdl="cd ~/Musique;./youtube-dl -x --audio-format opus -o \"%(title)s.mkv\""
       export XDG_CACHE_HOME="${home.homeDirectory}/.local/cache"
       export XDG_CONFIG_HOME="${home.homeDirectory}/.config"
       export XDG_DATA_HOME="${home.homeDirectory}/.local/share"
     '';
+    shellAliases = {
+      ytdl = "cd ~/Musique;./youtube-dl -x --audio-format opus -o \"%(title)s.mkv\"";
+      alacritty = "tabbed -cr 2 alacritty --embed ''"; 
+    };
     oh-my-zsh = {
       enable = true;
       theme = "robbyrussell";
@@ -174,6 +185,17 @@ rec
       #   };
       # }
     ];
+  };
+
+  programs.ssh = {
+    enable = true;
+    matchBlocks = {
+      "scott-NEAL-PC" = {
+        hostname = "NEAL-PC";
+        user = "scott";
+        port = 817;
+      };
+    };
   };
 
   manual.manpages.enable = false;
