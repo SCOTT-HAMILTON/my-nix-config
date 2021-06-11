@@ -3,15 +3,24 @@
 , config
 , options
 , modulesPath
+, specialArgs
 }:
 with pkgs;
 let
-  localShamilton = import ./../../GIT/nur-packages-template/default.nix {
+  localShamilton = import ./../../GIT/nur-packages/default.nix {
     localUsage = true;
   };
   nixpkgs-discord = import (builtins.fetchTarball {
-    url = "http://github.com/NixOS/nixpkgs/archive/247e919436b2423012c7aade2189d8e5fc3c2a5e.tar.gz";
-    sha256 = "1j07jc8y1gfwdw1c084kks70ddgimczfjghc3w7zcw6wh73si5jx";
+    url = "http://github.com/NixOS/nixpkgs/archive/501e54080dfc82c41011d371677a7390eab61586.tar.gz";
+    sha256 = "06l2wb0mi0dqvjawik9j8ncdgxzi6cqsm0fv0fph2m18p5bryxy9";
+  }) {};
+  nixpkgs-googleearthpro = import (builtins.fetchTarball {
+    url = "http://github.com/SCOTT-HAMILTON/nixpkgs/archive/83c4ed8121e9e29cbe86faf09c426ddf8db9a9e5.tar.gz";
+    sha256 = "1v03i28144rcmlf6jnjg0025snvhiwpd62b2hwjw4sp2hsa06l17";
+  }) {};
+  nixpkgs-inkscape = import (builtins.fetchTarball {
+    url = "http://github.com/SCOTT-HAMILTON/nixpkgs/tarball/297d1d6";
+    sha256 = "0vim9j8ab5wq0fgns4bs877zhpqaa2d08nvlvmb7s5mxnw4mfqz8";
   }) {};
   # shamilton = import (builtins.fetchTarball {
   #   url = "https://github.com/SCOTT-HAMILTON/nur-packages-template/archive/master.tar.gz";
@@ -37,8 +46,8 @@ rec
   home.homeDirectory = config.home-dir.home_dir;
   nixpkgs.overlays = [
     localShamilton.overlays.rofi
-    localShamilton.overlays.alacritty
     localShamilton.overlays.tabbed
+    localShamilton.overlays.alacritty
   ];
   xdg = {
     enable = true;
@@ -57,15 +66,13 @@ rec
   home.packages = [
     ## Personnal apps
     localShamilton.android-platform-tools
-    localShamilton.baobab
-    localShamilton.bomber
+    localShamilton.autognirehtet
     localShamilton.cdc-cognitoform-result-generator
     localShamilton.controls-for-fake
     localShamilton.fake-mic-wav-player
     localShamilton.haste-client
+    localShamilton.json-beautifier
     localShamilton.juk
-    localShamilton.kapptemplate
-    localShamilton.kbreakout
     localShamilton.keysmith
     localShamilton.killbots
     localShamilton.kirigami-gallery
@@ -76,9 +83,8 @@ rec
     localShamilton.pronotebot
     localShamilton.scripts
     localShamilton.spectacle-clipboard
-    localShamilton.super-tux-kart
+    localShamilton.splat
     localShamilton.timetable2header
-    localShamilton.unoconvui
     localShamilton.xtreme-download-manager
     localShamilton.yaml2probatree
 
@@ -87,7 +93,7 @@ rec
 
     ## Desktop Environment
     gnome3.dconf
-    libreoffice    
+    libreoffice-fresh
     mpv
     simplescreenrecorder
     mate.eom
@@ -106,19 +112,28 @@ rec
     meson
     qtcreator
 
+    ## Documentation
+    man-pages
+    posix_man_pages
+
     ## Games
+    bomber
+    libsForQt5.kdeApplications.kbreakout
+    libsForQt5.kdeApplications.kgeography
     minecraft
-    kdeApplications.kgeography
+    superTuxKart
 
     ## Graphics
     blender
     gimp
-    inkscape
+    nixpkgs-inkscape.inkscape
 
     ## Internet
+    tdesktop
+    nheko
+    nixpkgs-discord.discord
     protonvpn-cli
     skype
-    nixpkgs-discord.discord
 
     ## Packages managers
     flatpak
@@ -126,20 +141,24 @@ rec
     ## Utilities
     adb-sync
     alacritty
+    baobab
     doas
+    gnirehtet
     gnome3.adwaita-icon-theme
-    gource
+    kapptemplate
     nix-index
+    nixpkgs-googleearthpro.googleearth-pro
     nixpkgs-review
+    openjdk
     patchelf
     python3Packages.youtube-dl
     ripgrep
     rofi
-    texlive.combined.scheme-full
     tabbed
+    texlive.combined.scheme-full
     tldr
     tree
-    xdotool
+    xnee
   ];
 
   programs.emacs = {
@@ -168,7 +187,6 @@ rec
     '';
     shellAliases = {
       ytdl = "cd ~/Musique;./youtube-dl -x --audio-format opus -o \"%(title)s.mkv\"";
-      alacritty = "tabbed -cr 2 alacritty --embed ''"; 
     };
     oh-my-zsh = {
       enable = true;
